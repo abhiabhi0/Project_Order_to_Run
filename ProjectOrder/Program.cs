@@ -31,6 +31,12 @@ class Program
         }
         obj.display_dependencies();
         obj.display_indegree();
+        List<string> project_order = obj.sort_projects();
+        Console.WriteLine("Order : ");
+        foreach (string proj in project_order)
+        {
+            Console.WriteLine(proj);
+        }
         //Console.WriteLine("\t" + projects[1]);
         //Console.WriteLine("\t" + projects_pairs[1]);
         //for (int i = 0; i < projects.Count; ++i)

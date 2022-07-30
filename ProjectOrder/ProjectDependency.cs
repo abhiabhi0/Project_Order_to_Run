@@ -77,6 +77,50 @@ namespace ProjectOrder
             }
         }
 
+        public List<string> sort_projects()
+        {
+            PriorityQueue<string, int> queue = new PriorityQueue<string, int>();
+            List<string> project_order = new List<string>();
+
+            foreach (var ele in indegree)
+            {
+                if (ele.Value == 0)
+                {
+                    queue.Enqueue(ele.Key, ele.Value);
+                }
+            }
+
+            while (queue.Count > 0)
+            {
+                string curr_proj = queue.Dequeue();
+                Console.WriteLine("curr proj" + curr_proj);
+
+                if (this.indegree[curr_proj] == 0)
+                {
+                    Console.WriteLine("curr proj indegree value" + this.indegree[curr_proj]);
+                    project_order.Add(curr_proj);
+                }
+
+                if (this.dependencies.ContainsKey(curr_proj))
+                {
+                    foreach (string dependent_proj in this.dependencies[curr_proj])
+                    {
+                        Console.WriteLine("depedent proj " + dependent_proj);
+                        if (this.indegree[dependent_proj] > 0)
+                        {
+                            this.indegree[dependent_proj]--;
+
+                            if (this.indegree[dependent_proj] == 0)
+                            {
+                                queue.Enqueue(dependent_proj, 0);
+                            }
+                        }
+                    }
+                }
+            }
+            return project_order;
+        }
+
         public void display_dependencies()
         {
             foreach(var ele in dependencies)
