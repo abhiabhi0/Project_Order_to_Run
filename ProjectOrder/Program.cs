@@ -20,7 +20,7 @@ class Program
             //Console.WriteLine("\t" + line);
             if (index == 0)
             {
-                projects = line.Split(',').ToList<string>();
+                obj.find_projects(line);
             }
             else
             {
@@ -30,6 +30,7 @@ class Program
             index++;
         }
         obj.display_dependencies();
+        obj.display_indegree();
         //Console.WriteLine("\t" + projects[1]);
         //Console.WriteLine("\t" + projects_pairs[1]);
         //for (int i = 0; i < projects.Count; ++i)

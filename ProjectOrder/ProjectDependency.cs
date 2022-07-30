@@ -17,12 +17,22 @@ namespace ProjectOrder
         {
             for (int i = 0; i < projects_lst.Count; i++)
             {
+                //Console.WriteLine("adding" + projects_lst[i]);
                 this.indegree.Add(projects_lst[i], 0);
             }
         }
 
+        private void update_indegree(string project)
+        {
+            this.indegree[project] += 1;
+            //Console.WriteLine(project +" updated " + this.indegree[project]);
+        }
+
         private void add_dependencies(string key, string value)
         {
+            //update indegree dictionary
+            this.update_indegree(value.Remove(0, 1));
+
             if (this.dependencies.ContainsKey(key))
             {
                 List<string> list = this.dependencies[key];
@@ -48,6 +58,8 @@ namespace ProjectOrder
             {
                 projects_lst[i] = projects_lst[i].Trim();
             }
+
+            this.initialize_indegree(projects_lst);
         }
         public void find_dependencies(string dependency_str)
         {
@@ -60,7 +72,7 @@ namespace ProjectOrder
 
                 if (i % 2 != 0)
                 {
-                    add_dependencies(dependency_lst[i], dependency_lst[i - 1]);
+                    this.add_dependencies(dependency_lst[i], dependency_lst[i - 1]);
                 }
             }
         }
@@ -70,6 +82,14 @@ namespace ProjectOrder
             foreach(var ele in dependencies)
             {
                 Console.WriteLine(ele.Key + " " + ele.Value[0]);
+            }
+        }
+
+        public void display_indegree()
+        {
+            foreach(var ele in indegree)
+            {
+                Console.WriteLine(ele.Key + " " + ele.Value);
             }
         }
     }
