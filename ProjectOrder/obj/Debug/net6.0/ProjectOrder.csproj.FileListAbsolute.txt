@@ -1,0 +1,15 @@
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\ProjectOrder.exe
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\ProjectOrder.deps.json
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\ProjectOrder.runtimeconfig.json
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\ProjectOrder.dll
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\ProjectOrder.pdb
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.csproj.AssemblyReference.cache
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.GeneratedMSBuildEditorConfig.editorconfig
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.AssemblyInfoInputs.cache
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.AssemblyInfo.cs
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.csproj.CoreCompileInputs.cache
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.dll
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\refint\ProjectOrder.dll
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.pdb
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ProjectOrder.genruntimeconfig.cache
+D:\ProjectOrder\ProjectOrder\obj\Debug\net6.0\ref\ProjectOrder.dll

@@ -1,0 +1,5 @@
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\publish\ProjectOrder.exe
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\publish\ProjectOrder.dll
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\publish\ProjectOrder.deps.json
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\publish\ProjectOrder.runtimeconfig.json
+D:\ProjectOrder\ProjectOrder\bin\Debug\net6.0\publish\ProjectOrder.pdb
