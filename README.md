@@ -10,13 +10,24 @@ Output: Any one valid build order of the projects.
 
 ### Examples
 
-```
 Input:
+```
 P1, P2, P3, P4
 (P1, P2), (P1, P3), (P3, P4)
+```
 
 Output:
+```
 P2 P4 P3 P1
 ```
 
 ![ex1](https://github.com/programmercave0/Project_Order_to_Run/blob/main/Images/ex1.PNG)
+
+Input:
+```
+P1, P2, P3, P4
+(P1, P2), (P2, P3), (P3, P4), (P4, P1)
+```
+
+We cannot run these projects in any order because we have a deadlock situation.
+![ex1](https://github.com/programmercave0/Project_Order_to_Run/blob/main/Images/ex2.PNG)
