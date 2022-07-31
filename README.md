@@ -31,4 +31,29 @@ P1, P2, P3, P4
 
 We cannot run these projects in any order because we have a deadlock situation.
 
-![ex1](https://github.com/programmercave0/Project_Order_to_Run/blob/main/Images/ex2.PNG)
+![ex2](https://github.com/programmercave0/Project_Order_to_Run/blob/main/Images/ex2.PNG)
+
+## UML Class Diagram
+
+![uml](https://github.com/programmercave0/Project_Order_to_Run/blob/main/Images/uml.PNG)
+
+### Testcases
+
+Input:
+```
+P1, P2, P3, P4, P5, P6, P7
+(P1, P2), (P3, P2), (P4, P2)
+```
+
+Output:
+```
+P2 P7 P4 P3 P1 P6 P5
+```
+
+Input:
+```
+P1, P2, P3, P4, (P1, P2), (P2, P3), (P3, P4)
+```
+
+Output:
+Exception - Invalid Input Format
