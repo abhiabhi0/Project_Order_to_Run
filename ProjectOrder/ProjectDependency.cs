@@ -82,22 +82,32 @@ namespace ProjectOrder
             PriorityQueue<string, int> queue = new PriorityQueue<string, int>();
             List<string> project_order = new List<string>();
 
+            bool has_non_dependent = false;
+
             foreach (var ele in indegree)
             {
                 if (ele.Value == 0)
                 {
                     queue.Enqueue(ele.Key, ele.Value);
+                    has_non_dependent = true;
                 }
+            }
+
+            //Can't resolve dependency bcoz new Project has indegree equal to 0
+            if (!has_non_dependent)
+            {
+                string msg = "Dependencies for these project cannot be resolved";
+                throw new NotResolvedException(msg);
             }
 
             while (queue.Count > 0)
             {
                 string curr_proj = queue.Dequeue();
-                Console.WriteLine("curr proj" + curr_proj);
+                //Console.WriteLine("curr proj" + curr_proj);
 
                 if (this.indegree[curr_proj] == 0)
                 {
-                    Console.WriteLine("curr proj indegree value" + this.indegree[curr_proj]);
+                    //Console.WriteLine("curr proj indegree value" + this.indegree[curr_proj]);
                     project_order.Add(curr_proj);
                 }
 
@@ -105,7 +115,7 @@ namespace ProjectOrder
                 {
                     foreach (string dependent_proj in this.dependencies[curr_proj])
                     {
-                        Console.WriteLine("depedent proj " + dependent_proj);
+                        //Console.WriteLine("depedent proj " + dependent_proj);
                         if (this.indegree[dependent_proj] > 0)
                         {
                             this.indegree[dependent_proj]--;
