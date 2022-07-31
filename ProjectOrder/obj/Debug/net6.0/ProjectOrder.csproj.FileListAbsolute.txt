@@ -28,3 +28,16 @@ D:\Project_Order_to_Run\ProjectOrder\obj\Debug\net6.0\refint\ProjectOrder.dll
 D:\Project_Order_to_Run\ProjectOrder\obj\Debug\net6.0\ProjectOrder.pdb
 D:\Project_Order_to_Run\ProjectOrder\obj\Debug\net6.0\ProjectOrder.genruntimeconfig.cache
 D:\Project_Order_to_Run\ProjectOrder\obj\Debug\net6.0\ref\ProjectOrder.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\ProjectOrder.dll.config
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Project_Order_to_Run\ProjectOrder\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+D:\Project_Order_to_Run\ProjectOrder\obj\Debug\net6.0\ProjectOrder.csproj.CopyComplete

@@ -6,14 +6,6 @@ using System.Threading.Tasks;
 
 namespace ProjectOrder
 {
-    //class UserDefinedExceptions : Exception
-    //{
-    //    public UserDefinedExceptions(string msg):base(msg)
-    //    {
-            
-    //    }
-    //}
-
     class NotResolvedException : Exception
     {
         public NotResolvedException(string msg) : base(msg)
@@ -25,6 +17,13 @@ namespace ProjectOrder
     class InvalidInputFormatException : Exception
     {
         public InvalidInputFormatException(string msg) : base(msg)
+        {
+
+        }
+    }
+    class EmptyInputFileException : Exception
+    {
+        public EmptyInputFileException(string msg) : base(msg)
         {
 
         }

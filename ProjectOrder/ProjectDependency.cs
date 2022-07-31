@@ -8,16 +8,24 @@ namespace ProjectOrder
 {
     class ProjectDependency
     {
+        private string Projects { get; set; }
+        private string Dependencies { get; set; }
+
         //String maps to List[strings]
         //Project maps to List of projects dependent on it
-        private Dictionary<string, List<string>> dependencies = new Dictionary<string, List<string>>();
+        private Dictionary<string, List<string>> dependencies_dict = new Dictionary<string, List<string>>();
         private Dictionary<string, int> indegree =  new Dictionary<string, int>();
+
+        public ProjectDependency(string projects, string dependencies)
+        {
+            Projects = projects;
+            Dependencies = dependencies;
+        }
 
         private void initialize_indegree(List<string> projects_lst)
         {
             for (int i = 0; i < projects_lst.Count; i++)
             {
-                //Console.WriteLine("adding" + projects_lst[i]);
                 this.indegree.Add(projects_lst[i], 0);
             }
         }
@@ -25,32 +33,33 @@ namespace ProjectOrder
         private void update_indegree(string project)
         {
             this.indegree[project] += 1;
-            //Console.WriteLine(project +" updated " + this.indegree[project]);
         }
 
         private void add_dependencies(string key, string value)
         {
             //update indegree dictionary
             this.update_indegree(value.Remove(0, 1));
-
-            if (this.dependencies.ContainsKey(key))
+            value = value.Remove(0, 1);
+            key = key.Remove(2);
+            if (this.dependencies_dict.ContainsKey(key) == true)
             {
-                List<string> list = this.dependencies[key];
+                List<string> list = this.dependencies_dict[key];
                 if (list.Contains(value) == false)
                 {
-                    list.Add(value.Remove(0, 1));
+                    list.Add(value);
                 }
             }
             else
             {
                 List<string> list = new List<string>();
-                list.Add(value.Remove(0, 1));
-                this.dependencies.Add(key.Remove(2), list);
+                list.Add(value);
+                this.dependencies_dict.Add(key, list);
             }
         }
 
-        private void find_projects(string projects_str)
+        private void find_projects()
         {
+            string projects_str = this.Projects;
             List<string> projects_lst = new List<string>();
             projects_lst = projects_str.Split(',').ToList<string>();
 
@@ -61,8 +70,9 @@ namespace ProjectOrder
 
             this.initialize_indegree(projects_lst);
         }
-        private void find_dependencies(string dependency_str)
+        private void find_dependencies()
         {
+            string dependency_str = this.Dependencies;
             List<string> dependency_lst = new List<string>();
             dependency_lst = dependency_str.Split(',').ToList<string>();
 
@@ -77,10 +87,10 @@ namespace ProjectOrder
             }
         }
 
-        public List<string> sort_projects(string projects_str, string dependency_str)
+        public List<string> sort_projects()
         {
-            this.find_projects(projects_str);
-            this.find_dependencies(dependency_str);
+            this.find_projects();
+            this.find_dependencies();
             PriorityQueue<string, int> queue = new PriorityQueue<string, int>();
             List<string> project_order = new List<string>();
 
@@ -95,7 +105,7 @@ namespace ProjectOrder
                 }
             }
 
-            //Can't resolve dependency bcoz new Project has indegree equal to 0
+            //Can't resolve dependency bcoz no Project has indegree equal to 0
             if (!has_non_dependent)
             {
                 string msg = "Dependencies for these project cannot be resolved";
@@ -105,19 +115,16 @@ namespace ProjectOrder
             while (queue.Count > 0)
             {
                 string curr_proj = queue.Dequeue();
-                //Console.WriteLine("curr proj" + curr_proj);
 
                 if (this.indegree[curr_proj] == 0)
                 {
-                    //Console.WriteLine("curr proj indegree value" + this.indegree[curr_proj]);
                     project_order.Add(curr_proj);
                 }
 
-                if (this.dependencies.ContainsKey(curr_proj))
+                if (this.dependencies_dict.ContainsKey(curr_proj))
                 {
-                    foreach (string dependent_proj in this.dependencies[curr_proj])
+                    foreach (string dependent_proj in this.dependencies_dict[curr_proj])
                     {
-                        //Console.WriteLine("depedent proj " + dependent_proj);
                         if (this.indegree[dependent_proj] > 0)
                         {
                             this.indegree[dependent_proj]--;
