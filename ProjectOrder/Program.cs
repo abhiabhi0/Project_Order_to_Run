@@ -56,9 +56,9 @@ class Program
         {
             Console.WriteLine(eifex.Message.ToString());
         }
-        //catch (Exception ex)
-        //{
-        //    Console.WriteLine(ex.Message.ToString());
-        //}
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message.ToString());
+        }
     }
 }
