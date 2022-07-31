@@ -9,42 +9,57 @@ class Program
         {
             string[] lines = System.IO.File.ReadAllLines(@"D:\Project_Order_to_Run\input_file.txt");
 
-            int index = 0;
-            List<string> projects = new List<string>();
-            List<string> projects_pairs = new List<string>();
-            //string[] projects_pairs;
-
+            List<Batch> batches = new List<Batch>();
             ProjectDependency obj = new ProjectDependency();
+            string projects = String.Empty;
+            string dependencies = String.Empty;
 
-            foreach (string line in lines)
+            for (int i = 0; i < lines.Count(); i+=2)
             {
                 // Use a tab to indent each line of the file.
                 //Console.WriteLine("\t" + line);
-                if (index == 0)
+   
+                projects = lines[i];
+                if (i+1 < lines.Count())
                 {
-                    obj.find_projects(line);
+                    dependencies = lines[i + 1];
                 }
-                else
-                {
-                    //projects_pairs = line.Split(',').ToList<string>();
-                    obj.find_dependencies(line);
-                }
-                index++;
+               
+                batches.Add(new Batch(projects, dependencies));
+                projects = String.Empty;
+                dependencies = String.Empty;
             }
 
-            if (index % 2 != 0)
+
+            foreach (Batch batch in batches)
             {
-                throw new InvalidInputFormatException("Input is of Invalid Format");
+                Console.Write("Projects - ");
+                batch.display_projects();
+                Console.Write("Dependencies - ");
+                batch.display_dependencies();
+                Console.Write("Projects Order - ");
+                batch.find_project_order();
+                batch.display_project_order();
+                Console.WriteLine("\n-------------------------------");
             }
 
-            obj.display_dependencies();
-            obj.display_indegree();
-            List<string> project_order = obj.sort_projects();
-            Console.WriteLine("Order : ");
-            foreach (string proj in project_order)
-            {
-                Console.WriteLine(proj);
-            }
+            //if (index % 2 != 0)
+            //{
+            //    throw new InvalidInputFormatException("Input is of Invalid Format");
+            //}
+            //else
+            //{
+
+            //}
+
+            //obj.display_dependencies();
+            //obj.display_indegree();
+            //List<string> project_order = obj.sort_projects();
+            //Console.WriteLine("Order : ");
+            //foreach (string proj in project_order)
+            //{
+            //    Console.WriteLine(proj);
+            //}
             //Console.WriteLine("\t" + projects[1]);
             //Console.WriteLine("\t" + projects_pairs[1]);
             //for (int i = 0; i < projects.Count; ++i)
@@ -71,7 +86,7 @@ class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.ToString());
+            Console.WriteLine(ex.Message.ToString());
         }
         
     }

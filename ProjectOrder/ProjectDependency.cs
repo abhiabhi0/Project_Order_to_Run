@@ -49,7 +49,7 @@ namespace ProjectOrder
             }
         }
 
-        public void find_projects(string projects_str)
+        private void find_projects(string projects_str)
         {
             List<string> projects_lst = new List<string>();
             projects_lst = projects_str.Split(',').ToList<string>();
@@ -61,7 +61,7 @@ namespace ProjectOrder
 
             this.initialize_indegree(projects_lst);
         }
-        public void find_dependencies(string dependency_str)
+        private void find_dependencies(string dependency_str)
         {
             List<string> dependency_lst = new List<string>();
             dependency_lst = dependency_str.Split(',').ToList<string>();
@@ -77,8 +77,10 @@ namespace ProjectOrder
             }
         }
 
-        public List<string> sort_projects()
+        public List<string> sort_projects(string projects_str, string dependency_str)
         {
+            this.find_projects(projects_str);
+            this.find_dependencies(dependency_str);
             PriorityQueue<string, int> queue = new PriorityQueue<string, int>();
             List<string> project_order = new List<string>();
 
@@ -129,22 +131,6 @@ namespace ProjectOrder
                 }
             }
             return project_order;
-        }
-
-        public void display_dependencies()
-        {
-            foreach(var ele in dependencies)
-            {
-                Console.WriteLine(ele.Key + " " + ele.Value[0]);
-            }
-        }
-
-        public void display_indegree()
-        {
-            foreach(var ele in indegree)
-            {
-                Console.WriteLine(ele.Key + " " + ele.Value);
-            }
         }
     }
 }
