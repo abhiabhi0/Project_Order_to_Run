@@ -30,4 +30,5 @@ P1, P2, P3, P4
 ```
 
 We cannot run these projects in any order because we have a deadlock situation.
+
 ![ex1](https://github.com/programmercave0/Project_Order_to_Run/blob/main/Images/ex2.PNG)
