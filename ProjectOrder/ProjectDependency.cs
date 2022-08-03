@@ -15,6 +15,7 @@ namespace ProjectOrder
         //Project maps to List of projects dependent on it
         private Dictionary<string, List<string>> dependencies_dict = new Dictionary<string, List<string>>();
         private Dictionary<string, int> indegree =  new Dictionary<string, int>();
+        private List<string> project_lst = new List<string>();
 
         public ProjectDependency(string projects, string dependencies)
         {
@@ -22,11 +23,53 @@ namespace ProjectOrder
             Dependencies = dependencies;
         }
 
-        private void initialize_indegree(List<string> projects_lst)
+        void dfs_helper(string curr_proj, ref Dictionary<string, int> status, ref bool is_cyclic) //using depth first search to find cyclic dependency
         {
-            for (int i = 0; i < projects_lst.Count; i++)
+            status[curr_proj] = 1;
+
+            if (this.dependencies_dict.ContainsKey(curr_proj))
             {
-                this.indegree.Add(projects_lst[i], 0);
+                foreach (string project in this.dependencies_dict[curr_proj])
+                {
+                    if (status[project] == 0)
+                    {
+                        dfs_helper(project, ref status, ref is_cyclic);
+                    }
+                    else if (status[project] == 1)
+                    {
+                        is_cyclic = true;
+                        return;
+                    }
+                }
+            }
+            status[curr_proj] = 2;
+        }
+        bool check_cyclic_dependency()
+        {
+            //status = 0 (unprocessed), 1 (processing), 2 (processed)
+            Dictionary<string, int> status = new Dictionary<string, int>();
+            bool is_cyclic = false;
+
+            for (int i = 0; i < this.project_lst.Count; i++)
+            {
+                status.Add(this.project_lst[i], 0);
+            }
+
+            foreach (string proj in this.project_lst)
+            {
+                dfs_helper(proj, ref status, ref is_cyclic);
+
+                if (is_cyclic) return is_cyclic;
+            }
+            
+            return is_cyclic;
+        }
+
+        private void initialize_indegree()
+        {
+            for (int i = 0; i < this.project_lst.Count; i++)
+            {
+                this.indegree.Add(this.project_lst[i], 0);
             }
         }
 
@@ -60,15 +103,15 @@ namespace ProjectOrder
         private void find_projects()
         {
             string projects_str = this.Projects;
-            List<string> projects_lst = new List<string>();
-            projects_lst = projects_str.Split(',').ToList<string>();
+            //List<string> projects_lst = new List<string>();
+            this.project_lst = projects_str.Split(',').ToList<string>();
 
-            for (int i = 0; i < projects_lst.Count; ++i)
+            for (int i = 0; i < project_lst.Count; ++i)
             {
-                projects_lst[i] = projects_lst[i].Trim();
+                project_lst[i] = project_lst[i].Trim();
             }
 
-            this.initialize_indegree(projects_lst);
+            this.initialize_indegree();
         }
         private void find_dependencies()
         {
@@ -94,24 +137,26 @@ namespace ProjectOrder
             PriorityQueue<string, int> queue = new PriorityQueue<string, int>();
             List<string> project_order = new List<string>();
 
-            bool has_non_dependent = false;
+            //bool has_non_dependent = false;
 
             foreach (var ele in indegree)
             {
                 if (ele.Value == 0)
                 {
                     queue.Enqueue(ele.Key, ele.Value);
-                    has_non_dependent = true;
+                    //has_non_dependent = true;
                 }
             }
 
-            //Can't resolve dependency bcoz no Project has indegree equal to 0
-            if (!has_non_dependent)
+            bool cyclic_dependency = check_cyclic_dependency();
+
+            if (cyclic_dependency)
             {
                 string msg = "Dependencies for these project cannot be resolved";
                 throw new NotResolvedException(msg);
             }
 
+            
             while (queue.Count > 0)
             {
                 string curr_proj = queue.Dequeue();
