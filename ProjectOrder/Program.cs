@@ -14,12 +14,21 @@ class Program
 
             if (lines.Length == 0)
             {
-                throw new EmptyInputFileException("The Input File is Empty!");
+                throw new EmptyInputFileException("The Input File is Empty!");  
             }
 
             if (lines.Length == 1)
             {
-                throw new InvalidInputFormatException("Invalid Input Format");
+                if (lines[0].Contains('(') || lines[0].Contains(')'))
+                {
+                    throw new InvalidInputFormatException("Invalid Input Format. Both Projects and dependencies on same line");
+                }
+                else
+                {
+                    Console.WriteLine("No dependency given. Projects can be run in any order");
+                    return;
+                }
+                
             }
             
             string projects = String.Empty;
@@ -27,13 +36,14 @@ class Program
 
             projects = lines[0];
             dependencies = lines[1];
+            
+            Console.WriteLine("Projects - " + projects);
+            Console.WriteLine("Dependencies - " + dependencies);
+
             ProjectDependency projectDependency = new ProjectDependency(projects, dependencies);
             List<string> project_order = projectDependency.sort_projects();
-
             try
             {
-                Console.WriteLine("Projects - " + projects);
-                Console.WriteLine("Dependencies - " + dependencies);
                 Console.Write("Projects Order - ");
                 foreach (string project in project_order)
                 {
@@ -41,9 +51,17 @@ class Program
                 }
                 Console.WriteLine();
             }
-            catch (NotResolvedException nrex)
+            catch (CircularDependencyException cdex)
             {
-                Console.WriteLine(nrex.Message.ToString());
+                Console.WriteLine(cdex.Message.ToString());
+            }
+            catch (SelfDependencyException sdex)
+            {
+                Console.WriteLine(sdex.Message.ToString());
+            }
+            catch (InvalidInputFormatException ifex)
+            {
+                Console.WriteLine(ifex.Message.ToString());
             }
 
             return;

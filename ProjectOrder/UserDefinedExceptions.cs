@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProjectOrder
 {
-    class NotResolvedException : Exception
+    class CircularDependencyException : Exception
     {
-        public NotResolvedException(string msg) : base(msg)
+        public CircularDependencyException(string msg) : base(msg)
         {
 
         }
@@ -24,6 +24,22 @@ namespace ProjectOrder
     class EmptyInputFileException : Exception
     {
         public EmptyInputFileException(string msg) : base(msg)
+        {
+
+        }
+    }
+
+    class SelfDependencyException : Exception
+    {
+        public SelfDependencyException(string msg) : base(msg)
+        {
+
+        }
+    }
+
+    class SingleDependencyException : Exception
+    {
+        public SingleDependencyException(string msg) : base(msg)
         {
 
         }

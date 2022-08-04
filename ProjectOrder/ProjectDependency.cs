@@ -81,9 +81,14 @@ namespace ProjectOrder
         private void add_dependencies(string key, string value)
         {
             //update indegree dictionary
-            this.update_indegree(value.Remove(0, 1));
-            value = value.Remove(0, 1);
-            key = key.Remove(2);
+            this.update_indegree(value);
+
+            if (key.Equals(value))
+            {
+                string msg = "Self Dependency exists! Can't resolve";
+                throw new SelfDependencyException(msg);
+            }
+
             if (this.dependencies_dict.ContainsKey(key) == true)
             {
                 List<string> list = this.dependencies_dict[key];
@@ -103,7 +108,6 @@ namespace ProjectOrder
         private void find_projects()
         {
             string projects_str = this.Projects;
-            //List<string> projects_lst = new List<string>();
             this.project_lst = projects_str.Split(',').ToList<string>();
 
             for (int i = 0; i < project_lst.Count; ++i)
@@ -113,20 +117,59 @@ namespace ProjectOrder
 
             this.initialize_indegree();
         }
+
         private void find_dependencies()
         {
             string dependency_str = this.Dependencies;
             List<string> dependency_lst = new List<string>();
             dependency_lst = dependency_str.Split(',').ToList<string>();
 
-            for (int i = 0; i < dependency_lst.Count; i++)
+            for (int i = 0; i < dependency_str.Length; i++)
             {
-                dependency_lst[i] = dependency_lst[i].Trim();
-
-                if (i % 2 != 0)
+                string key = String.Empty;
+                string value = String.Empty;
+                bool has_dependency = false;
+                if (dependency_str[i] == '(')
                 {
-                    this.add_dependencies(dependency_lst[i], dependency_lst[i - 1]);
+                    int j, k = i;
+                    for (j = i + 1; j < dependency_str.Length; ++j)
+                    {
+                        if (dependency_str[j] == ',')
+                        {
+                            k = j;
+                            has_dependency = true;
+                            value = dependency_str.Substring(i + 1, j - i - 1).Trim();
+                        }
+                        if (dependency_str[j] == ')')
+                        {
+                            if (has_dependency)
+                            {
+                                key = dependency_str.Substring(k + 1, j - k - 1).Trim();
+                            }
+                            else
+                            {
+                                value = dependency_str.Substring(i + 1, j - i - 1).Trim();
+                            }
+                            break;
+                        }
+                    }
+                    if (!has_dependency)
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine("Single Dependency!! for -- " + value);
+                        Console.WriteLine();
+                    }
+                    else if (has_dependency && (key == String.Empty || value == String.Empty))
+                    {
+                        throw new InvalidInputFormatException("Invalid Format! No dependency exist");
+                    }
+                    else
+                    {
+                        this.add_dependencies(key, value);
+                    }
+                    i = j;
                 }
+                
             }
         }
 
@@ -137,14 +180,11 @@ namespace ProjectOrder
             PriorityQueue<string, int> queue = new PriorityQueue<string, int>();
             List<string> project_order = new List<string>();
 
-            //bool has_non_dependent = false;
-
             foreach (var ele in indegree)
             {
                 if (ele.Value == 0)
                 {
                     queue.Enqueue(ele.Key, ele.Value);
-                    //has_non_dependent = true;
                 }
             }
 
@@ -152,8 +192,8 @@ namespace ProjectOrder
 
             if (cyclic_dependency)
             {
-                string msg = "Dependencies for these project cannot be resolved";
-                throw new NotResolvedException(msg);
+                string msg = "Circular Dependency!! Dependencies for these project cannot be resolved";
+                throw new CircularDependencyException(msg);
             }
 
             
