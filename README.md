@@ -1,4 +1,4 @@
-# Project_Order_to_Run
+# Resolve Dependency - Projects Order to Run
 
 Consider a build system that is to build a set of projects. Projects may be dependent on each other, so they need to be built in order. The inputs will be:
 
